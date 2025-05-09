@@ -1,0 +1,2220 @@
+{
+	"info": {
+		"_postman_id": "c15c5b15-452b-47df-ad0f-44cebefb1992",
+		"name": "CatCafe",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44723779",
+		"_collection_link": "https://sofiasanabria.postman.co/workspace/CatCafe~86747762-9c28-4897-8796-30314f43ee11/collection/44723779-c15c5b15-452b-47df-ad0f-44cebefb1992?action=share&source=collection_link&creator=44723779"
+	},
+	"item": [
+		{
+			"name": "Adopters",
+			"item": [
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Add a new cat adopter",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"{{adopterName}}\",\r\n  \"lastName\": \"{{adopterLastName}}\",\r\n  \"dateOfBirth\": \"2000-05-06T17:28:27.459Z\",\r\n  \"phone\": \"{{adopterPhone}}\",\r\n  \"address\": \"{{adopterAddress}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/adopters",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cat adopter empty phone number",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"{{adopterName}}\",\r\n  \"lastName\": \"{{adopterLastName}}\",\r\n  \"dateOfBirth\": \"2000-05-06T17:28:27.459Z\",\r\n  \"phone\": \"\",\r\n  \"address\": \"{{adopterAddress}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/adopters",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cat adopter empty address",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"{{adopterName}}\",\r\n  \"lastName\": \"{{adopterLastName}}\",\r\n  \"dateOfBirth\": \"2000-05-06T17:28:27.459Z\",\r\n  \"phone\": \"{{adopterPhone}}\",\r\n  \"address\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/adopters",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cat adopter empty date of birth",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"{{adopterName}}\",\r\n  \"lastName\": \"{{adopterLastName}}\",\r\n  \"dateOfBirth\": \"\",\r\n  \"phone\": \"{{adopterPhone}}\",\r\n  \"address\": \"{{adopterAddress}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/adopters",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cat adopter empty last name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"{{adopterName}}\",\r\n  \"lastName\": \"\",\r\n  \"dateOfBirth\": \"2000-05-06T17:28:27.459Z\",\r\n  \"phone\": \"{{adopterPhone}}\",\r\n  \"address\": \"{{adopterAddress}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/adopters",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cat adopter empty name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"\",\r\n  \"lastName\": \"{{adopterLastName}}\",\r\n  \"dateOfBirth\": \"2000-05-06T17:28:27.459Z\",\r\n  \"phone\": \"{{adopterPhone}}\",\r\n  \"address\": \"{{adopterAddress}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/adopters",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cat adopter without name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"lastName\": \"{{adopterLastName}}\",\r\n  \"dateOfBirth\": \"2000-05-06T17:28:27.459Z\",\r\n  \"phone\": \"{{adopterPhone}}\",\r\n  \"address\": \"{{adopterAddress}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/adopters",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cat adopter without last name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"{{adopterName}}\",\r\n  \"dateOfBirth\": \"2000-05-06T17:28:27.459Z\",\r\n  \"phone\": \"{{adopterPhone}}\",\r\n  \"address\": \"{{adopterAddress}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/adopters",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cat adopter without date of birth",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"{{adopterName}}\",\r\n  \"lastName\": \"{{adopterLastName}}\",\r\n  \"phone\": \"{{adopterPhone}}\",\r\n  \"address\": \"{{adopterAddress}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/adopters",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cat adopter without phone number",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"{{adopterName}}\",\r\n  \"lastName\": \"{{adopterLastName}}\",\r\n  \"dateOfBirth\": \"2000-05-06T17:28:27.459Z\",\r\n  \"address\": \"{{adopterAddress}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/adopters",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cat adopter without address",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"{{adopterName}}\",\r\n  \"lastName\": \"{{adopterLastName}}\",\r\n  \"dateOfBirth\": \"2000-05-06T17:28:27.459Z\",\r\n  \"phone\": \"{{adopterPhone}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/adopters",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Empty request",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"error\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/adopters",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cat adopter younger than 18 years old",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"{{adopterName}}\",\r\n  \"lastName\": \"{{adopterLastName}}\",\r\n  \"dateOfBirth\": \"{{$isoTimestamp}}\",\r\n  \"phone\": \"{{adopterPhone}}\",\r\n  \"address\": \"{{adopterAddress}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/adopters",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "All cat adopters",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/adopters",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create and get adopter",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"try {\r",
+											"    const response = await pm.sendRequest({\r",
+											"        url: (pm.collectionVariables.get(\"base_url\") + \"/api/adopters\").toString(),\r",
+											"        method: \"POST\",\r",
+											"        header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"        },\r",
+											"        body: {\r",
+											"            mode: 'raw', \r",
+											"            raw: JSON.stringify({\r",
+											"                \"name\": pm.collectionVariables.get(\"adopterName\"),\r",
+											"                \"lastName\": pm.collectionVariables.get(\"adopterLastName\").toString(),\r",
+											"                \"dateOfBirth\": \"2000-05-06T17:28:27.459Z\",\r",
+											"                \"phone\": pm.collectionVariables.get(\"adopterPhone\").toString(),\r",
+											"                \"address\": pm.collectionVariables.get(\"adopterAddress\").toString()\r",
+											"            })\r",
+											"        }\r",
+											"    });\r",
+											"\r",
+											"    console.log(response.json());\r",
+											"    console.log(response.json().id)\r",
+											"\r",
+											"    pm.collectionVariables.set(\"adopterID\", response.json().id);\r",
+											"} catch (err) {\r",
+											"    console.error(err);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/adopters/{{adopterID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters",
+										"{{adopterID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Non existent adpoter",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"try {\r",
+											"    const response = await pm.sendRequest({\r",
+											"        url: (pm.collectionVariables.get(\"base_url\") + \"/api/adopters\").toString(),\r",
+											"        method: \"GET\"\r",
+											"    });\r",
+											"\r",
+											"    console.log(response.json());\r",
+											"    \r",
+											"    const elements = response.json()\r",
+											"    let ids = []\r",
+											"    elements.forEach((element) =>\r",
+											"    ids.push(element.id)\r",
+											"    )\r",
+											"\r",
+											"    console.log(ids)\r",
+											"\r",
+											"    const lastID = ids[ids.length -1]\r",
+											"\r",
+											"    pm.collectionVariables.set(\"adopterID\", lastID + 1);\r",
+											"} catch (err) {\r",
+											"    console.error(err);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Adopter not found\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/adopters/{{adopterID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters",
+										"{{adopterID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "Delete adopter",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"try {\r",
+											"    const response = await pm.sendRequest({\r",
+											"        url: (pm.collectionVariables.get(\"base_url\") + \"/api/adopters\").toString(),\r",
+											"        method: \"POST\",\r",
+											"        header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"        },\r",
+											"        body: {\r",
+											"            mode: 'raw', \r",
+											"            raw: JSON.stringify({\r",
+											"                \"name\": pm.collectionVariables.get(\"adopterName\"),\r",
+											"                \"lastName\": pm.collectionVariables.get(\"adopterLastName\").toString(),\r",
+											"                \"dateOfBirth\": \"2000-05-06T17:28:27.459Z\",\r",
+											"                \"phone\": pm.collectionVariables.get(\"adopterPhone\").toString(),\r",
+											"                \"address\": pm.collectionVariables.get(\"adopterAddress\").toString()\r",
+											"            })\r",
+											"        }\r",
+											"    });\r",
+											"\r",
+											"    console.log(response.json());\r",
+											"    console.log(response.json().id)\r",
+											"\r",
+											"    pm.collectionVariables.set(\"adopterID\", response.json().id);\r",
+											"} catch (err) {\r",
+											"    console.error(err);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/adopters/{{adopterID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters",
+										"{{adopterID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete non existent adopter",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"try {\r",
+											"    const response = await pm.sendRequest({\r",
+											"        url: (pm.collectionVariables.get(\"base_url\") + \"/api/adopters\").toString(),\r",
+											"        method: \"GET\"\r",
+											"    });\r",
+											"\r",
+											"    console.log(response.json());\r",
+											"    \r",
+											"    const elements = response.json()\r",
+											"    let ids = []\r",
+											"    elements.forEach((element) =>\r",
+											"    ids.push(element.id)\r",
+											"    )\r",
+											"\r",
+											"    console.log(ids)\r",
+											"\r",
+											"    const lastID = ids[ids.length -1]\r",
+											"\r",
+											"    pm.collectionVariables.set(\"adopterID\", lastID + 1);\r",
+											"} catch (err) {\r",
+											"    console.error(err);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/adopters/{{adopterID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"adopters",
+										"{{adopterID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Register user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"User registered successfully\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register user and login",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"try {\r",
+											"    const response = await pm.sendRequest({\r",
+											"        url: (pm.collectionVariables.get(\"base_url\") + \"/api/auth/register\").toString(),\r",
+											"        method: \"POST\",\r",
+											"        header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"        },\r",
+											"        body: {\r",
+											"            mode: 'raw', \r",
+											"            raw: JSON.stringify({\r",
+											"                \"username\": pm.collectionVariables.get(\"username\").toString(),\r",
+											"                \"password\": pm.collectionVariables.get(\"password\").toString()\r",
+											"            })\r",
+											"        }\r",
+											"    });\r",
+											"\r",
+											"    console.log(response.json());\r",
+											"} catch (err) {\r",
+											"    console.error(err);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"accessToken\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register existent username",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"try {\r",
+											"    const response = await pm.sendRequest({\r",
+											"        url: (pm.collectionVariables.get(\"base_url\") + \"/api/auth/register\").toString(),\r",
+											"        method: \"POST\",\r",
+											"        header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"        },\r",
+											"        body: {\r",
+											"            mode: 'raw', \r",
+											"            raw: JSON.stringify({\r",
+											"                \"username\": pm.collectionVariables.get(\"username\").toString(),\r",
+											"                \"password\": pm.collectionVariables.get(\"password\").toString()\r",
+											"            })\r",
+											"        }\r",
+											"    });\r",
+											"\r",
+											"    console.log(response.json());\r",
+											"} catch (err) {\r",
+											"    console.error(err);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 409\", function () {\r",
+											"    pm.response.to.have.status(409);\r",
+											"});\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Username already exists\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"{{password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register empty username",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Username and password are required\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"\",\r\n  \"password\": \"{{password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register empty password",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Username and password are required\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login empty username",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Username and password are required\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"\",\r\n  \"password\": \"{{password}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login empty password",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Username and password are required\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Cats",
+			"item": [
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Add new cat",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Clover\",\r\n  \"age\": 1,\r\n  \"breed\": \"Persian\",\r\n  \"dateJoined\": \"2025-05-08T18:19:37.105Z\",\r\n  \"vaccinated\": true,\r\n  \"temperament\": [\r\n    \"Curious\"\r\n  ],\r\n  \"staffInCharge\": \"00000000-0000-0000-0000-000000000000\",\r\n  \"isAdopted\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/cats",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"cats"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "Get all cats",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_url}}/api/cats",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"cats"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get a cat by id",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"try {\r",
+											"    const response = await pm.sendRequest({\r",
+											"        url: (pm.collectionVariables.get(\"base_url\") + \"/api/cats\").toString(),\r",
+											"        method: \"POST\",\r",
+											"        header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"        },\r",
+											"        body: {\r",
+											"            mode: 'raw', \r",
+											"            raw: JSON.stringify({\r",
+											"                \"name\": \"Oliver\",\r",
+											"                \"age\": 2,\r",
+											"                \"breed\": \"Persian\",\r",
+											"                \"dateJoined\": \"2025-05-08T18:50:58.879Z\",\r",
+											"                \"vaccinated\": true,\r",
+											"                \"temperament\": [\r",
+											"                    \"Calm\"\r",
+											"                ],\r",
+											"                \"staffInCharge\": \"00000000-0000-0000-0000-000000000000\",\r",
+											"                \"isAdopted\": false\r",
+											"            })\r",
+											"        }\r",
+											"    });\r",
+											"\r",
+											"    console.log(response.json());\r",
+											"    console.log(response.json().id)\r",
+											"\r",
+											"    pm.collectionVariables.set(\"catID\", response.json().id);\r",
+											"} catch (err) {\r",
+											"    console.error(err);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Body matches string\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Oliver\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/cats/{{catID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"cats",
+										"{{catID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT",
+					"item": [
+						{
+							"name": "Update cat data",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"try {\r",
+											"    const response = await pm.sendRequest({\r",
+											"        url: (pm.collectionVariables.get(\"base_url\") + \"/api/cats\").toString(),\r",
+											"        method: \"POST\",\r",
+											"        header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"        },\r",
+											"        body: {\r",
+											"            mode: 'raw', \r",
+											"            raw: JSON.stringify({\r",
+											"                \"name\": \"Oliver\",\r",
+											"                \"age\": 2,\r",
+											"                \"breed\": \"Persian\",\r",
+											"                \"dateJoined\": \"2025-05-08T18:50:58.879Z\",\r",
+											"                \"vaccinated\": true,\r",
+											"                \"temperament\": [\r",
+											"                    \"Calm\"\r",
+											"                ],\r",
+											"                \"staffInCharge\": \"00000000-0000-0000-0000-000000000000\",\r",
+											"                \"isAdopted\": false\r",
+											"            })\r",
+											"        }\r",
+											"    });\r",
+											"\r",
+											"    console.log(response.json());\r",
+											"    console.log(response.json().id)\r",
+											"\r",
+											"    pm.collectionVariables.set(\"catID\", response.json().id);\r",
+											"} catch (err) {\r",
+											"    console.error(err);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Oli\",\r\n  \"age\": 3,\r\n  \"breed\": \"Persian\",\r\n  \"dateJoined\": \"2025-05-09T19:28:01.712Z\",\r\n  \"vaccinated\": true,\r\n  \"temperament\": [\r\n    \"Playful\", \r\n    \"Nervous\"\r\n  ],\r\n  \"staffInCharge\": \"00000000-0000-0000-0000-000000000000\",\r\n  \"isAdopted\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/cats/{{catID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"cats",
+										"{{catID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PATCH",
+					"item": [
+						{
+							"name": "Update cat adopter",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"try {\r",
+											"    //cat\r",
+											"    const response = await pm.sendRequest({\r",
+											"        url: (pm.collectionVariables.get(\"base_url\") + \"/api/cats\").toString(),\r",
+											"        method: \"POST\",\r",
+											"        header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"        },\r",
+											"        body: {\r",
+											"            mode: 'raw', \r",
+											"            raw: JSON.stringify({\r",
+											"                \"name\": \"Oliver\",\r",
+											"                \"age\": 2,\r",
+											"                \"breed\": \"Persian\",\r",
+											"                \"dateJoined\": \"2025-05-08T18:50:58.879Z\",\r",
+											"                \"vaccinated\": true,\r",
+											"                \"temperament\": [\r",
+											"                    \"Calm\"\r",
+											"                ],\r",
+											"                \"staffInCharge\": \"00000000-0000-0000-0000-000000000000\",\r",
+											"                \"isAdopted\": false\r",
+											"            })\r",
+											"        }\r",
+											"    });\r",
+											"\r",
+											"    console.log(response.json());\r",
+											"    console.log(response.json().id)\r",
+											"\r",
+											"    pm.collectionVariables.set(\"catID\", response.json().id);\r",
+											"\r",
+											"    //adopter\r",
+											"    const adopter = await pm.sendRequest({\r",
+											"        url: (pm.collectionVariables.get(\"base_url\") + \"/api/adopters\").toString(),\r",
+											"        method: \"POST\",\r",
+											"        header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"        },\r",
+											"        body: {\r",
+											"            mode: 'raw', \r",
+											"            raw: JSON.stringify({\r",
+											"                \"name\": pm.collectionVariables.get(\"adopterName\"),\r",
+											"                \"lastName\": pm.collectionVariables.get(\"adopterLastName\").toString(),\r",
+											"                \"dateOfBirth\": \"2000-05-06T17:28:27.459Z\",\r",
+											"                \"phone\": pm.collectionVariables.get(\"adopterPhone\").toString(),\r",
+											"                \"address\": pm.collectionVariables.get(\"adopterAddress\").toString()\r",
+											"            })\r",
+											"        }\r",
+											"    });\r",
+											"\r",
+											"    console.log(adopter.json());\r",
+											"\r",
+											"    pm.collectionVariables.set(\"adopterID\", adopter.json().id);\r",
+											"} catch (err) {\r",
+											"    console.error(err);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"staffInCharge\": \"b339f710-6762-4c41-a0c2-2869eb8e1b11\",\r\n  \"adopterId\": {{adopterID}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/cats/{{catID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"cats",
+										"{{catID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "Delete cat",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"try {\r",
+											"    const response = await pm.sendRequest({\r",
+											"        url: (pm.collectionVariables.get(\"base_url\") + \"/api/cats\").toString(),\r",
+											"        method: \"POST\",\r",
+											"        header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"        },\r",
+											"        body: {\r",
+											"            mode: 'raw', \r",
+											"            raw: JSON.stringify({\r",
+											"                \"name\": \"Cleo\",\r",
+											"                \"age\": 2,\r",
+											"                \"breed\": \"Siamese\",\r",
+											"                \"dateJoined\": \"2025-05-08T18:50:58.879Z\",\r",
+											"                \"vaccinated\": true,\r",
+											"                \"temperament\": [\r",
+											"                    \"Calm\"\r",
+											"                ],\r",
+											"                \"staffInCharge\": \"00000000-0000-0000-0000-000000000000\",\r",
+											"                \"isAdopted\": false\r",
+											"            })\r",
+											"        }\r",
+											"    });\r",
+											"\r",
+											"    console.log(response.json());\r",
+											"    console.log(response.json().id)\r",
+											"\r",
+											"    pm.collectionVariables.set(\"catID\", response.json().id);\r",
+											"} catch (err) {\r",
+											"    console.error(err);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_url}}/api/cats/{{catID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"cats",
+										"{{catID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Staff",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "All staff members",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"try {\r",
+											"    const response = await pm.sendRequest({\r",
+											"        url: (pm.collectionVariables.get(\"base_url\") + \"/api/auth/login\").toString(),\r",
+											"        method: \"POST\",\r",
+											"        header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"        },\r",
+											"        body: {\r",
+											"            mode: 'raw', \r",
+											"            raw: JSON.stringify({\r",
+											"                \"username\": pm.collectionVariables.get(\"username\").toString(),\r",
+											"                \"password\": pm.collectionVariables.get(\"password\").toString()\r",
+											"            })\r",
+											"        }\r",
+											"    });\r",
+											"\r",
+											"    console.log(response.json());\r",
+											"\r",
+											"    pm.collectionVariables.set(\"token\", response.json().accessToken)\r",
+											"} catch (err) {\r",
+											"    console.error(err);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{base_url}}/api/staff",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"staff"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Add staff member",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"try {\r",
+											"    const response = await pm.sendRequest({\r",
+											"        url: (pm.collectionVariables.get(\"base_url\") + \"/api/auth/login\").toString(),\r",
+											"        method: \"POST\",\r",
+											"        header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"        },\r",
+											"        body: {\r",
+											"            mode: 'raw', \r",
+											"            raw: JSON.stringify({\r",
+											"                \"username\": pm.collectionVariables.get(\"username\").toString(),\r",
+											"                \"password\": pm.collectionVariables.get(\"password\").toString()\r",
+											"            })\r",
+											"        }\r",
+											"    });\r",
+											"\r",
+											"    console.log(response.json());\r",
+											"\r",
+											"    pm.collectionVariables.set(\"token\", response.json().accessToken)\r",
+											"} catch (err) {\r",
+											"    console.error(err);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"{{staffName}}\",\r\n  \"lastName\": \"{{staffLastName}}\",\r\n  \"age\": 30,\r\n  \"dateJoined\": \"2025-05-09T18:24:45.220Z\",\r\n  \"role\": \"Assistant\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/staff",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"staff"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE",
+					"item": [
+						{
+							"name": "Remove staff member",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"try {\r",
+											"    const response = await pm.sendRequest({\r",
+											"        url: (pm.collectionVariables.get(\"base_url\") + \"/api/auth/login\").toString(),\r",
+											"        method: \"POST\",\r",
+											"        header: {\r",
+											"        \"Content-Type\": \"application/json\"\r",
+											"        },\r",
+											"        body: {\r",
+											"            mode: 'raw', \r",
+											"            raw: JSON.stringify({\r",
+											"                \"username\": pm.collectionVariables.get(\"username\").toString(),\r",
+											"                \"password\": pm.collectionVariables.get(\"password\").toString()\r",
+											"            })\r",
+											"        }\r",
+											"    });\r",
+											"\r",
+											"    console.log(response.json());\r",
+											"\r",
+											"    pm.collectionVariables.set(\"token\", response.json().accessToken)\r",
+											"\r",
+											"    const addStaff = await pm.sendRequest({\r",
+											"        url: (pm.collectionVariables.get(\"base_url\") + \"/api/staff\").toString(),\r",
+											"        method: \"POST\",\r",
+											"        header: {\r",
+											"        \"Content-Type\": \"application/json\",\r",
+											"        \"Authorization\": \"Bearer \" + response.json().accessToken\r",
+											"        },\r",
+											"        body: {\r",
+											"            mode: 'raw', \r",
+											"            raw: JSON.stringify({\r",
+											"                \"name\": pm.collectionVariables.get(\"staffName\").toString(),\r",
+											"                \"lastName\": pm.collectionVariables.get(\"staffLastName\").toString(),\r",
+											"                \"age\": 30,\r",
+											"                \"dateJoined\": \"2025-05-09T18:24:45.220Z\",\r",
+											"                \"role\": \"Assistant\"\r",
+											"            })\r",
+											"        }\r",
+											"    });\r",
+											"\r",
+											"    console.log(addStaff.json());\r",
+											"    pm.collectionVariables.set(\"staffID\", addStaff.json().id);\r",
+											"} catch (err) {\r",
+											"    console.error(err);\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"{{staffName}}\",\r\n  \"lastName\": \"{{staffLastName}}\",\r\n  \"age\": 30,\r\n  \"dateJoined\": \"2025-05-09T18:24:45.220Z\",\r\n  \"role\": \"Assistant\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/staff/{{staffID}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"staff",
+										"{{staffID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"try {\r",
+							"    const response = await pm.sendRequest({\r",
+							"        url: (pm.collectionVariables.get(\"base_url\") + \"/api/auth/register\").toString(),\r",
+							"        method: \"POST\",\r",
+							"        header: {\r",
+							"        \"Content-Type\": \"application/json\"\r",
+							"        },\r",
+							"        body: {\r",
+							"            mode: 'raw', \r",
+							"            raw: JSON.stringify({\r",
+							"                \"username\": pm.collectionVariables.get(\"username\").toString(),\r",
+							"                \"password\": pm.collectionVariables.get(\"password\").toString()\r",
+							"            })\r",
+							"        }\r",
+							"    });\r",
+							"\r",
+							"    console.log(response.json());\r",
+							"    console.log(pm.collectionVariables.get(\"username\"))\r",
+							"} catch (err) {\r",
+							"    console.error(err);\r",
+							"}"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"const {Property} = require('postman-collection'); \r",
+					"let adopterName = Property.replaceSubstitutions(\"{{$randomFirstName}}\");\r",
+					"let adopterLastName = Property.replaceSubstitutions(\"{{$randomLastName}}\");\r",
+					"let adopterPhone = Property.replaceSubstitutions(\"{{$randomPhoneNumber}}\");\r",
+					"let adopterAddress = Property.replaceSubstitutions(\"{{$randomStreetAddress}}\");\r",
+					"let username = Property.replaceSubstitutions(\"{{$randomUserName}}\");\r",
+					"let password = Property.replaceSubstitutions(\"{{$randomPassword}}\");\r",
+					"let staffName = Property.replaceSubstitutions(\"{{$randomFirstName}}\");\r",
+					"let staffLastName = Property.replaceSubstitutions(\"{{$randomLastName}}\");\r",
+					"\r",
+					"pm.collectionVariables.set(\"adopterName\", adopterName);\r",
+					"pm.collectionVariables.set(\"adopterLastName\", adopterLastName);\r",
+					"pm.collectionVariables.set(\"adopterPhone\", adopterPhone);\r",
+					"pm.collectionVariables.set(\"adopterAddress\", adopterAddress);\r",
+					"pm.collectionVariables.set(\"username\", username);\r",
+					"pm.collectionVariables.set(\"password\", password);\r",
+					"pm.collectionVariables.set(\"staffName\", staffName);\r",
+					"pm.collectionVariables.set(\"staffLastName\", staffLastName);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "adopterName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "adopterLastName",
+			"value": ""
+		},
+		{
+			"key": "adopterPhone",
+			"value": ""
+		},
+		{
+			"key": "adopterAddress",
+			"value": ""
+		},
+		{
+			"key": "adopterID",
+			"value": ""
+		},
+		{
+			"key": "catID",
+			"value": ""
+		},
+		{
+			"key": "username",
+			"value": ""
+		},
+		{
+			"key": "password",
+			"value": ""
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "staffName",
+			"value": ""
+		},
+		{
+			"key": "staffLastName",
+			"value": ""
+		},
+		{
+			"key": "staffID",
+			"value": ""
+		}
+	]
+}
