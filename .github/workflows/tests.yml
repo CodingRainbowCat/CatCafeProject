@@ -1,0 +1,58 @@
+name: CI-Test
+ 
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+ 
+env:
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
+  DISABLE_RATE_LIMIT: ${{ true }}
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: Testing
+    defaults:
+      run:
+        working-directory: ./
+ 
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+ 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+ 
+      - name: Install dependencies & start API
+        run: |
+          npm ci
+          npm run dev &      # background the CatCafe API
+          sleep 5            # give it time to start
+ 
+      - name: Install Newman CLI
+        run: npm install --save-dev newman
+ 
+      - name: Run Postman collection with Newman
+        run: |
+          # run collection + 4 reporters
+          npx newman run ./tests/postman/CatCafe.postman_collection.json \
+            -r cli,json,junit \
+            --reporter-json-export newman/results.json \
+            --reporter-junit-export newman/results.xml
+ 
+      - name: Upload Newman reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          # Name of the artifact in the UI
+          name: newman-reports
+          retention-days: 7
+          # Files or directories to include
+          path: |
+            newman/results.json
+            newman/results.xml
