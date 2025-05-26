@@ -22,7 +22,7 @@ export class StaffController {
     let staff: Staff | null = null;
 
     try {
-      staff = await staffService.getStaff(id);
+      staff = await staffService.getStaffById(id);
       if (!staff) {
         return res.status(404).json({ error: 'Staff member not found' });
       }
@@ -52,7 +52,7 @@ export class StaffController {
   async addStaff(req: Request, res: Response) {
     try {
       const validatedStaff = StaffSchema.parse(req.body);
-      const newStaff = await staffService.addStaff(validatedStaff);
+      const newStaff = await staffService.createStaff(validatedStaff);
       res.status(201).json(newStaff);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -67,9 +67,9 @@ export class StaffController {
       
       try {
         const hasCatsInCharge = await catService.getCatsByStaffId(id);
-        if (hasCatsInCharge.length >= 1) { return res.status(400).json({message: 'Staff can not be deleted when they are in charge of cats. Please assign the cats to a new Staff first'});}
+        if (hasCatsInCharge && hasCatsInCharge.length >= 1) { return res.status(400).json({message: 'Staff can not be deleted when they are in charge of cats. Please assign the cats to a new Staff first'});}
         
-        const removed = await staffService.removeStaff(id);
+        const removed = await staffService.deleteStaff(id);
         if (!removed) {
           return res.status(404).json({ message: 'Staff not found' });
         }

@@ -1,6 +1,6 @@
-import { Router, Request, Response } from "express";
-import { authController } from "../controllers/authController.ts";
-import rateLimit from "express-rate-limit";
+import { Router, Request, Response } from 'express';
+import { authController } from '../controllers/authController.js';
+import rateLimit from 'express-rate-limit';
 import { NextFunction } from "express-serve-static-core";
 
 const router = Router();

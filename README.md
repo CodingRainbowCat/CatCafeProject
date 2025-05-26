@@ -1,11 +1,13 @@
 # CatCafeProject
 
 ## Project overview
-CatCafeProject is an API designed to facilitate automation testing for a Cat Café management system. It provides endpoints for managing cats, their staff, and adopters. It features a Swagger documentation for its endpoints.
+CatCafeProject is an API designed to facilitate automation testing for a Cat Café management system. It provides endpoints for managing cats, their staff, adopters and to register and log in to be able to call the staff endpoints. It features a Swagger documentation for its endpoints.
+In the files, you can also find a complete Postman collection for test reference and quick testing.
 
-## Prerequisites
+## Prerequisites for local use
 - Node.js
 - npm (Node Package Manager)
+- PostgreSQL installed with user and password set up
 
 ## Installation
 1. Clone the repository:
@@ -20,18 +22,34 @@ CatCafeProject is an API designed to facilitate automation testing for a Cat Caf
     ```sh
     npm install
     ```
+4. Run PostgreSQL Server from services.msc: Look for a Service called "postgresql-x64-17", right click -> Start.
+5. Create a DB called 'cat_cafe_db':
+    ```sh
+    cd "C:\Program Files\PostgreSQL\17\bin"
+    psql.exe -U postgres
+    CREATE DATABASE cat_cafe_db
+    ```
+6. Create an .env file in the CatCafeProject folder and set it up with the following values:
+    ```sh
+    RDS_HOSTNAME=localhost
+    RDS_PORT=5432
+    RDS_USERNAME=[username provided on PostreSQL setup, or its default value: "postgres"]
+    RDS_PASSWORD=[password provided on PostgreSQL setup]
+    RDS_DB_NAME=cat_cafe_db
+    ```
 
 ## Running the Project
-To run the project, open the project in Visual Studio Code and execute the following command in the terminal:
+To run the API, open a cmd from the folder where you have the project and run the following command:
 ```sh
 npm run dev
 ```
+You can also open the project in Visual Studio Code and execute the command in the VS terminal.
 After the server starts, you can access the Swagger interface by opening [http://localhost:3000/api-docs](http://localhost:3000/api-docs) in your browser.
 
 ### Authentication
 The staff endpoints have JWT authentication, and uses a JWT secret. A JWT secret is a string used to sign and verify JSON Web Tokens (JWTs).  It's essential for ensuring that your JWTs are secure and can't be tampered with.
 When you create a JWT, you use the secret to generate a signature. When a user sends the JWT back, your server uses the same secret to verify the signature.
-You'll need to create a .env file with this variable set: "JWT_SECRET=". Use a long, random, and unpredictable string for the value.
+You'll need to add to the .env file this variable: "JWT_SECRET=". Use a long, random, and unpredictable string for the value.
 
 Using JWT Authentication also means that you'll be working with a Bearer Token that you need to send in the header whenever you want to call an endpoint. You can set the header in the config like this:
 ```sh

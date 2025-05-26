@@ -36,7 +36,7 @@ export class AdopterController {
     let adopter: Adopter | null = null;
 
     try {
-      adopter = await adopterService.getAdopter(parseInt(id));
+      adopter = await adopterService.getAdopterById(parseInt(id));
       if (!adopter) {
         return res.status(404).json({ error: "Adopter not found" });
       }
@@ -57,7 +57,7 @@ export class AdopterController {
     let adopters: Adopter[] | null = null;
 
     try {
-      adopters = await adopterService.getAdopters();
+      adopters = await adopterService.getAllAdopters();
       res.json(adopters);
     } catch (error) {
       res
@@ -74,9 +74,12 @@ export class AdopterController {
           message: "The adopter must be at least 18 years old to adopt a cat",
         });
       }
-
-      const newAdopter = await adopterService.addAdopter(validatedAdopter);
-      res.status(201).json(newAdopter);
+      const existingAdopter = await adopterService.getAdopterByPhone(validatedAdopter.phone);
+      if (existingAdopter) {
+        return res.status(400).json({
+          message: "An adopter with this phone number already exists",
+        });
+      }  
     } catch (error) {
       if (error instanceof z.ZodError) {
         return res.status(400).json({ error: error.errors });
@@ -90,14 +93,14 @@ export class AdopterController {
 
     try {
       const adoptedCats = await catService.getCatsByAdopterId(parseInt(id));
-      if (adoptedCats.length >= 1) {
+      if (adoptedCats && adoptedCats.length >= 1) {
         return res.status(400).json({
           message:
             "Adopters can not be deleted if the adoption was carried out",
         });
       }
 
-      const removed = await adopterService.removeAdopter(parseInt(id));
+      const removed = await adopterService.deleteAdopter(parseInt(id));
       if (!removed) {
         return res.status(404).json({ message: "Adopter not found" });
       }

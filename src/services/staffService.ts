@@ -1,94 +1,95 @@
 import { Staff } from '../types/staff.js';
-import { JSONFilePreset } from 'lowdb/node';
+import { db } from '../db/index.js';
 
-const path = './src/db/staff.json';
 
-interface Database {
-  staff: Staff[];
-}
+(async () => {
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS staff (
+      id UUID PRIMARY KEY,
+      name VARCHAR(100) NOT NULL,
+      last_name VARCHAR(100) NOT NULL,
+      age INTEGER NOT NULL,
+      date_joined TIMESTAMP NOT NULL,
+      role VARCHAR(50) NOT NULL
+    );
+  `);
 
-function getDefaultDB(): Database {
-  const defaultDatabase: Database = { staff: [] };
-  const defaultStaff: Staff = {
-    id: '00000000-0000-0000-0000-000000000000',
-    name: 'The',
-    lastName: 'Boss',
-    age: 30,
-    dateJoined: new Date('2021-01-01'),
-    role: 'Boss'
+  await db.query(`
+    INSERT INTO staff (id, name, last_name, age, date_joined, role)
+    VALUES (
+      '00000000-0000-0000-0000-000000000000',
+      'The',
+      'Boss',
+      30,
+      '2021-01-01T00:00:00.000Z',
+      'Boss'
+    )
+    ON CONFLICT (id) DO NOTHING;
+  `);
+})();
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function rowToStaff(row: any): Staff {
+  return {
+    id: row.id,
+    name: row.name,
+    lastName: row.last_name,
+    age: row.age,
+    dateJoined: row.date_joined,
+    role: row.role
   };
-  defaultDatabase.staff.push(defaultStaff);
-  return defaultDatabase;
 }
 
 export class StaffService {
-  private static _lock: Promise<void> = Promise.resolve();
-
-  private async withLock<T>(fn: () => Promise<T>): Promise<T> {
-    let release: () => void;
-    const wait = new Promise<void>(resolve => { release = resolve; });
-    const previousLock = StaffService._lock;
-    StaffService._lock = previousLock.then(() => wait);
-    await previousLock;
-    try {
-      return await fn();
-    } finally {
-      release!();
-    }
-  }
-
-  private async readDB(): Promise<Database> {
-    try {
-      const db = await JSONFilePreset<Database>(path, getDefaultDB());
-      return db.data;
-    } catch {
-      return getDefaultDB();
-    }
-  }
-
-  private async writeDB(data: Database): Promise<void> {
-    const db = await JSONFilePreset<Database>(path, getDefaultDB());
-    db.data = data;
-    await db.write();
-  }
-
-  async getStaff(id: string | undefined): Promise<Staff | null> {
-    return this.withLock(async () => {
-      const db = await this.readDB();
-      if (id) return db.staff.find(staff => staff.id === id) || null;
-      return null;
-    });
-  }
-
+  
   async getAllStaff(): Promise<Staff[] | null> {
-    return this.withLock(async () => {
-      const db = await this.readDB();
-      return db.staff;
-    });
+    const res = await db.query('SELECT * FROM staff ORDER BY name');
+    if (!res.rows[0]) return null;
+    return res.rows;
   }
-
-  async addStaff(staff: Omit<Staff, 'id'>): Promise<Staff> {
-    return this.withLock(async () => {
-      const db = await this.readDB();
-      const newStaff: Staff = {
-        ...staff,
-        id: crypto.randomUUID(),
-        dateJoined: new Date(staff.dateJoined)
-      };
-      db.staff.push(newStaff);
-      await this.writeDB(db);
-      return newStaff;
-    });
+  
+  async getStaffById(id: string): Promise<Staff | null> {
+    const res = await db.query('SELECT * FROM staff WHERE id = $1', [id]);
+    return res.rows[0] || null;
   }
-
-  async removeStaff(id: string): Promise<boolean> {
-    return this.withLock(async () => {
-      const db = await this.readDB();
-      const initialLength = db.staff.length;
-      db.staff = db.staff.filter(staff => staff.id !== id);
-      if (db.staff.length === initialLength) return false;
-      await this.writeDB(db);
-      return true;
-    });
+  
+  async createStaff(data: Staff): Promise<Staff> {
+    const id = crypto.randomUUID();
+    const res = await db.query(`
+      INSERT INTO staff (id, name, last_name, age, date_joined, role)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING *`,
+      [id, data.name, data.lastName, data.age, data.dateJoined, data.role]
+    );
+    return rowToStaff(res.rows[0]);
+  }
+  
+  async updateStaff(id: string, data: Partial<Omit<Staff, 'id'>>): Promise<Staff | null> {
+    const existing = await this.getStaffById(id);
+    if (!existing) return null;
+  
+    const updated = { ...existing, ...data };
+  
+    await db.query(`
+      UPDATE staff SET name = $1, last_name = $2, age = $3, date_joined = $4, role = $5
+      WHERE id = $6`,
+      [
+        updated.name,
+        updated.lastName,
+        updated.age,
+        updated.dateJoined,
+        updated.role,
+        id,
+      ]
+    );
+  
+    return this.getStaffById(id);
+  }
+  
+  async deleteStaff(id: string): Promise<boolean> {
+    const existing = await this.getStaffById(id);
+    if (!existing) return false;
+    await db.query('DELETE FROM staff WHERE id = $1', [id]);
+    return true;
   }
 }

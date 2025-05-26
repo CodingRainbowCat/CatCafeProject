@@ -1,104 +1,63 @@
 import { Adopter } from '../types/adopter.js';
-import { JSONFilePreset } from 'lowdb/node';
+import { db } from '../db/index.js';
 
-const path = './src/db/adopters.json';
-
-interface Database {
-  lastId: number;
-  adopters: Adopter[];
-}
+(async () => {
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS adopters (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(100) NOT NULL,
+      last_name VARCHAR(100) NOT NULL,
+      date_of_birth DATE NOT NULL,
+      phone VARCHAR(20),
+      address VARCHAR(100)
+    );
+  `);
+})();
 
 export class AdopterService {
-  private static _lock: Promise<void> = Promise.resolve();
 
-  private async withLock<T>(fn: () => Promise<T>): Promise<T> {
-    let release: () => void;
-    const wait = new Promise<void>(resolve => {
-      release = resolve;
-    });
-
-    const previousLock = AdopterService._lock;
-    AdopterService._lock = previousLock.then(() => wait);
-
-    await previousLock;
-
-    try {
-      return await fn();
-    } finally {
-      release!();
-    }
+  async getAllAdopters(): Promise<Adopter[]> {
+    const res = await db.query('SELECT * FROM adopters ORDER BY name');
+    return res.rows;
+  }
+  
+  async getAdopterById(id: number): Promise<Adopter | null> {
+    const res = await db.query('SELECT * FROM adopters WHERE id = $1', [id]);
+    return res.rows[0] || null;
+  }
+  
+  async createAdopter(data: Omit<Adopter, 'id'>): Promise<Adopter> {
+    const res = await db.query(
+      `INSERT INTO adopters (name, last_name, date_of_birth, phone, address)
+       VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+      [data.name, data.lastName, data.dateOfBirth, data.phone, data.address]
+    );
+    return res.rows[0];
+  }
+  
+  async updateAdopter(id: number, data: Partial<Omit<Adopter, 'id'>>): Promise<Adopter | null> {
+    const existing = await this.getAdopterById(id);
+    if (!existing) return null;
+  
+    const updated = { ...existing, ...data };
+  
+    await db.query(
+      `UPDATE adopters SET name = $1, last_name = $2, date_of_birth = $3, phone = $4, address = $5 WHERE id = $6`,
+      [updated.name, updated.lastName, updated.dateOfBirth, data.phone, data.address, id]
+    );
+  
+    return this.getAdopterById(id);
+  }
+  
+  async deleteAdopter(id: number): Promise<boolean> {
+    const existing = await this.getAdopterById(id);
+    if (!existing) return false;
+    await db.query('DELETE FROM adopters WHERE id = $1', [id]);
+    return true;
   }
 
-  private async readDB(): Promise<Database> {
-    const defaultData: Database = { lastId: 0, adopters: [] };
-    try {
-      const db = await JSONFilePreset<Database>(path, defaultData);
-      return {
-        lastId: db.data.lastId ?? 0,
-        adopters: db.data.adopters ?? []
-      };
-    } catch {
-      return defaultData;
-    }
-  }
-
-  private async writeDB(data: Database): Promise<void> {
-    const defaultData: Database = { lastId: 0, adopters: [] };
-    const db = await JSONFilePreset<Database>(path, defaultData);
-    db.data = data;
-    await db.write();
-  }
-
-  async getAdopter(id: number | undefined): Promise<Adopter | null> {
-    return this.withLock(async () => {
-      const db = await this.readDB();
-      if (id) {
-        return db.adopters.find(adopter => adopter.id === id) || null;
-      }
-      return null;
-    });
-  }
-
-  async getAdopters(): Promise<Adopter[]> {
-    return this.withLock(async () => {
-      const db = await this.readDB();
-      return db.adopters;
-    });
-  }
-
-  async addAdopter(adopter: Omit<Adopter, 'id'>): Promise<Adopter> {
-    return this.withLock(async () => {
-      const db = await this.readDB();
-      const newAdopter: Adopter = {
-        ...adopter,
-        id: db.lastId + 1
-      };
-      db.lastId = Number(newAdopter.id);
-      db.adopters.push(newAdopter);
-      await this.writeDB(db);
-      return newAdopter;
-    });
-  }
-
-  async updateAdopter(adopter: Adopter): Promise<Adopter | null> {
-    return this.withLock(async () => {
-      const db = await this.readDB();
-      const index = db.adopters.findIndex(a => a.id === adopter.id);
-      if (index === -1) return null;
-      db.adopters[index] = adopter;
-      await this.writeDB(db);
-      return db.adopters[index];
-    });
-  }
-
-  async removeAdopter(id: number): Promise<boolean> {
-    return this.withLock(async () => {
-      const db = await this.readDB();
-      const initialLength = db.adopters.length;
-      db.adopters = db.adopters.filter(adopter => adopter.id !== id);
-      if (db.adopters.length === initialLength) return false;
-      await this.writeDB(db);
-      return true;
-    });
+  async getAdopterByPhone(phone: number): Promise<Adopter | null> {
+    const res = await db.query('SELECT * FROM adopters WHERE phone = $1', [phone.toString()]);
+    return res.rows[0] || null;
   }
 }

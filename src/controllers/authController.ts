@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { generateTokens, verifyPassword } from '../middleware/auth';
-import { AuthService } from '../services/authService';
+import { generateTokens } from '../middleware/auth.js';
+import { AuthService } from '../services/authService.js';
 import jwt from 'jsonwebtoken';
 
 const authService = new AuthService();
@@ -19,7 +19,7 @@ export class AuthController {
     }
 
     try {
-      const user = await authService.createUser(username, password);
+      const user = await authService.registerUser(username, password);
       res.status(201).json({ 
         message: 'User registered successfully',
         userId: user.id 
@@ -40,13 +40,8 @@ export class AuthController {
     }
 
     try {
-      const user = await authService.findUserByUsername(username);
+      const user = await authService.authenticateUser(username, password);
       if (!user) {
-        return res.status(401).json({ error: 'Invalid credentials' });
-      }
-
-      const isValid = await verifyPassword(password, user.password);
-      if (!isValid) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
 
@@ -70,7 +65,7 @@ export class AuthController {
 
     try {
       const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET!) as JwtPayload;
-      const user = await authService.findUserById(decoded.userId);
+      const user = await authService.getUserById(decoded.userId);
       
       if (!user) {
         return res.status(401).json({ error: 'Invalid refresh token' });

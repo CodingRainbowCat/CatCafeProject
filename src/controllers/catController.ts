@@ -26,7 +26,7 @@ export class CatController {
     const { id } = req.params;
     
     try {
-      const cat = await catService.getCat(id);
+      const cat = await catService.getCatById(parseInt(id));
       if (!cat) {
         return res.status(404).json({ message: 'Cat not found' });
       }
@@ -39,12 +39,12 @@ export class CatController {
   async getCats(_req: Request, res: Response) {
     try 
     {
-      const allCats = await catService.getCats();
+      const allCats = await catService.getAllCats();
 
       //Block code for temperaments filter
       const rawTemperaments = _req.query.temperaments?.toString().toLowerCase();
       let filteredCats = allCats;
-      if (rawTemperaments){
+      if (allCats && rawTemperaments){
         const parsedTemperaments = (rawTemperaments?.split('|').map(temp => temp.charAt(0).toUpperCase() + temp.slice(1))) as Temperament[];
         filteredCats = allCats.filter(cat => parsedTemperaments.every(temp => cat.temperament.includes(temp)));
       }
@@ -53,11 +53,11 @@ export class CatController {
       let isAdopted;
       if (_req.query.isAdopted?.toString().toLowerCase() === 'true'){ isAdopted = true; }
       if (_req.query.isAdopted?.toString().toLowerCase() === 'false'){ isAdopted = false; }
-      if (isAdopted === true)
+      if (filteredCats && isAdopted === true)
       {
         filteredCats = filteredCats.filter(cat => cat.isAdopted === true);
       }
-      if (isAdopted === false){
+      if (filteredCats && isAdopted === false){
         filteredCats = filteredCats.filter(cat => cat.isAdopted === false);
       }
 
@@ -70,15 +70,18 @@ export class CatController {
   async addCat(req: Request, res: Response) {
     try {
       const validatedData = CatSchema.parse(req.body);
-      const catStaff = await staffService.getStaff(validatedData.staffInCharge);
+      const catStaff = await staffService.getStaffById(validatedData.staffInCharge);
       if (!catStaff) {
         return res.status(404).json({ message: 'Staff not found'});
+      }
+      if (!this.isValidTemperamentArray(req.body.temperament)) {
+        return res.status(400).json({ error: 'Invalid temperament values' });
       }
       
       //Adopter logic block code
       if (validatedData.isAdopted && validatedData.adopterId !== undefined)
       {
-        const catAdopter = await adopterService.getAdopter(validatedData.adopterId);
+        const catAdopter = await adopterService.getAdopterById(validatedData.adopterId);
         if (!catAdopter){
            return res.status(404).json({message: 'Adopter not found'});
         }
@@ -91,7 +94,7 @@ export class CatController {
         validatedData.adopterId = undefined;
       }
 
-      const newCat = await catService.addCat(validatedData);
+      const newCat = await catService.createCat(validatedData);
       res.status(201).json(newCat);
     } 
     catch (err) {
@@ -107,15 +110,18 @@ export class CatController {
     
     try {
       const validatedData = CatSchema.parse(req.body);
-      const catStaff = await staffService.getStaff(validatedData.staffInCharge);
+      const catStaff = await staffService.getStaffById(validatedData.staffInCharge);
       if (!catStaff) {
         return res.status(404).json({ message: 'Staff not found'});
+      }
+      if (!this.isValidTemperamentArray(req.body.temperament)) {
+        return res.status(400).json({ error: 'Invalid temperament values' });
       }
       
       //Adopter logic block code
       if (validatedData.isAdopted && validatedData.adopterId !== undefined)
       {
-        const catAdopter = await adopterService.getAdopter(validatedData.adopterId);
+        const catAdopter = await adopterService.getAdopterById(validatedData.adopterId);
         if (!catAdopter){
            return res.status(404).json({message: 'Adopter not found'});
         }
@@ -128,7 +134,7 @@ export class CatController {
         validatedData.adopterId = undefined;
       }
 
-      const updatedCat = await catService.updateCat({ ...validatedData, id: parseInt(id) });
+      const updatedCat = await catService.updateCat(parseInt(id), validatedData);
       
       if (!updatedCat) {
         return res.status(404).json({ message: 'Cat not found' });
@@ -157,19 +163,21 @@ export class CatController {
     try {
       //Stuff validation
       const parsedStaff = StaffSchema.parse({ staffInCharge });
-      const validatedStaff = await staffService.getStaff(parsedStaff.staffInCharge);
+      let validatedStaff = null;
+      if (parsedStaff.staffInCharge) validatedStaff = await staffService.getStaffById(parsedStaff.staffInCharge);
       if (parsedStaff.staffInCharge && !validatedStaff) {
         return res.status(404).json({ message: 'Staff not found'});
       }
 
       //Adopter validation
       const parsedAdopter = AdopterSchema.parse({ adopterId });
-      const validatedAdopter = await adopterService.getAdopter(parsedAdopter.adopterId);
+      let validatedAdopter = null;
+      if (parsedAdopter.adopterId) validatedAdopter = await adopterService.getAdopterById(parsedAdopter.adopterId);
       if (parsedAdopter.adopterId && !validatedAdopter){
         return res.status(404).json({ message: 'Adopter not found'});
       }
 
-      const updatedCat = await catService.patchCat(id, parsedStaff.staffInCharge, parsedAdopter.adopterId);
+      const updatedCat = await catService.patchCat(parseInt(id), parsedStaff.staffInCharge, parsedAdopter.adopterId);
       
       if (!updatedCat) {
         return res.status(404).json({ message: 'Cat not found' });
@@ -189,7 +197,7 @@ export class CatController {
     const { id } = req.params;
     
     try {
-      const removed = await catService.removeCat(id);
+      const removed = await catService.deleteCat(parseInt(id));
       if (!removed) {
         return res.status(404).json({ message: 'Cat not found' });
       }
@@ -197,5 +205,10 @@ export class CatController {
     } catch (err) {
       res.status(500).json({ message: 'Internal server error' + JSON.stringify(err) });
     }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  isValidTemperamentArray(arr: any): arr is Temperament[] {
+    return Array.isArray(arr) && arr.every(t => TEMPERAMENTS.includes(t));
   }
 }
