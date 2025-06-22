@@ -21,8 +21,8 @@ const AdopterSchema = z.object({
       /^[+\d\-\s]+$/,
       "Phone number can only contain digits, +, -, and spaces"
     )
-    .refine((num) => num.replace(/[^\d]/g, "").length >= 8, {
-      message: "Phone number must have at least 8 digits",
+    .refine((num) => num.replace(/[^\d]/g, "").length >= 7, {
+      message: "Phone number must have at least 7 digits",
     })
     .transform((val) => Number(val.replace(/[^\d]/g, "").replace(/^0+/, ""))), // Remove non-digits and leading zeros, then convert to number
   address: z.string().min(6),
