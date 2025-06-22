@@ -248,7 +248,7 @@ const options = {
               description:
                 "The person must be at least 18 years old on the date they are created",
             },
-            role: {
+            phone: {
               type: "integer",
               description: "The adopter phone number",
             },
