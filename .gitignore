@@ -25,6 +25,3 @@ dist-ssr
 
 #env file
 *.env
-
-# DB
-src/db/*

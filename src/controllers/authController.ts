@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { generateTokens } from '../middleware/auth.js';
-import { AuthService } from '../services/authService.js';
+import { generateTokens } from '../middleware/auth';
+import { AuthService } from '../services/authService';
 import jwt from 'jsonwebtoken';
 
 const authService = new AuthService();

@@ -1,6 +1,6 @@
-import { hashPassword, verifyPassword } from '../middleware/auth.js';
-import { User } from '../types/user.js';
-import { db } from '../db/index.js';
+import { hashPassword, verifyPassword } from '../middleware/auth';
+import { User } from '../types/user.ts';
+import { db } from '../db/index.ts';
 
 // DB setup
 (async () => {

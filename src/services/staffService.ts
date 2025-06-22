@@ -1,5 +1,5 @@
-import { Staff } from '../types/staff.js';
-import { db } from '../db/index.js';
+import { Staff } from '../types/staff.ts';
+import { db } from '../db/index.ts';
 
 
 (async () => {

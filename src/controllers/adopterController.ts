@@ -79,7 +79,9 @@ export class AdopterController {
         return res.status(400).json({
           message: "An adopter with this phone number already exists",
         });
-      }  
+      }
+      const newAdopter = await adopterService.createAdopter(validatedAdopter);
+      res.status(201).json(newAdopter);  
     } catch (error) {
       if (error instanceof z.ZodError) {
         return res.status(400).json({ error: error.errors });

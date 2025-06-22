@@ -1,5 +1,5 @@
-import { Adopter } from '../types/adopter.js';
-import { db } from '../db/index.js';
+import { Adopter } from '../types/adopter.ts';
+import { db } from '../db/index.ts';
 
 (async () => {
   await db.query(`

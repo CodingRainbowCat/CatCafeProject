@@ -1,14 +1,4 @@
 import swaggerJsdoc from "swagger-jsdoc";
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const isLocal = process.env.NODE_ENV === 'development';
-const routesPath = isLocal
-  ? path.join(__dirname, '../../src/routes/*.ts')
-  : path.join(__dirname, './routes/*.js');
 
 const options = {
   definition: {
@@ -286,8 +276,7 @@ const options = {
       },
     },
   },
-  apis: [routesPath], // Path to the API routes
+  apis: ["./src/routes/*.ts"], // Path to the API routes
 };
 
-//eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const specs:any = swaggerJsdoc(options);
+export const specs = swaggerJsdoc(options);

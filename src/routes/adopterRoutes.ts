@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { AdopterController } from "../controllers/adopterController.js";
+import { AdopterController } from "../controllers/adopterController.ts";
 
 const router = Router();
 const adopterController = new AdopterController();

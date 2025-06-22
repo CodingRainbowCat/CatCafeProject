@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { CatController } from '../controllers/catController.js';
+import { CatController } from '../controllers/catController.ts';
 
 const router = Router();
 const catController = new CatController();

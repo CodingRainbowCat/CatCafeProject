@@ -1,5 +1,5 @@
-import { Cat, TEMPERAMENTS, Temperament } from '../types/cat.js';
-import { db } from '../db/index.js';
+import { Cat, TEMPERAMENTS, Temperament } from '../types/cat.ts';
+import { db } from '../db/index.ts';
 
 // --- Schema creation ---
 (async () => {

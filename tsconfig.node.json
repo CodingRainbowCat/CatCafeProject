@@ -10,8 +10,8 @@
     "moduleResolution": "bundler",
     "isolatedModules": true,
     "moduleDetection": "force",
-    "allowImportingTsExtensions": false,
-    "noEmit": false,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
 
     /* Linting */
     "strict": true,
