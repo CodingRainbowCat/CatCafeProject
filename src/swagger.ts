@@ -250,7 +250,7 @@ const options = {
             },
             phone: {
               type: "integer",
-              description: "The adopter phone number",
+              description: "The adopter phone number. This number must be unique. Supported formats: XXX-XXXX, XXX-XXXXX, +X XXX XXX XXXX",
             },
             address: {
               type: "string",
