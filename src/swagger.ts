@@ -249,7 +249,7 @@ const options = {
                 "The person must be at least 18 years old on the date they are created",
             },
             phone: {
-              type: "integer",
+              type: "string",
               description: "The adopter phone number. This number must be unique. Supported formats: XXX-XXXX, XXX-XXXXX, +X XXX XXX XXXX",
             },
             address: {
